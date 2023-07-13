@@ -9,77 +9,91 @@ import SwiftUI
 
 struct Destination {
     var name: String
+    var location: String
     var distance: Double
     var img_source: String
 }
  
 struct ContentView: View {
-    let priColor = Color(red: 0.06274509803921569, green: 0.8941176470588236, blue: 0.6941176470588235)
+    let priColor = Color(red: 0.403921568627451, green: 0.23137254901960785, blue: 0.8901960784313725)
     
     var body: some View {
-        let des1 = Destination(name: "Streat Cafe", distance: 0.1, img_source: "streat_cafe")
-        let des2 = Destination(name: "Standing Room RMIT", distance: 0.1, img_source: "standing_room")
-        let des3 = Destination(name: "The Bean Project", distance: 0.2, img_source: "bean_project")
-        let des4 = Destination(name: "Mexicana", distance: 0.2, img_source: "streat_cafe")
+        let des1 = Destination(name: "Streat Cafe",location: "Bowen Street", distance: 0.1, img_source: "streat_cafe")
+        let des2 = Destination(name: "Standing Room", location: "City", distance: 0.1, img_source: "standing_room")
+        let des3 = Destination(name: "The Bean Project", location: "Bowen Street", distance: 0.2, img_source: "bean_project")
         
-        let destinations : [Destination] = [des1, des2, des3, des4]
+        let destinations : [Destination] = [des1, des2, des3]
         
         VStack {
             VStack {
                 Section {
                     Text("Discover")
                         .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
-                        .frame(height: 1.5)
-                        .overlay(priColor)
-                }
-                Section {
+                        .overlay(.gray)
+
                     Text("What's near you")
                         .font(.title)
-                        .fontWeight(.bold)
-                        .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(priColor)
+                        .padding(.top, 10.0)
                 }
-                .padding(.top, 50.0)
-                
-                ForEach(destinations, id: \.name) { destination in
-                    Section {
-                        HStack {
-                            Image(destination.img_source)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .clipShape(Circle())
-                                .overlay {
-                                    Circle().stroke(.gray)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .fontWeight(.bold)
+     
+                VStack {
+                    
+                    ForEach(destinations, id: \.name) { destination in
+                        Section {
+                            HStack {
+                                Image(destination.img_source)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .clipShape(Circle())
+                                    .overlay {
+                                        Circle().stroke(.gray)
+                                    }
+                                    .frame(width: 40, height: 40)
+                                
+                                VStack (alignment: .leading) {
+                                    Text(destination.name)
+                                    Text(destination.location)
+                                        .foregroundColor(.gray)
                                 }
-                                .frame(width: 50, height: 50)
-
-                            Text(destination.name)
+                                
+                                Spacer()
+                                Text("\(destination.distance, specifier: "%.1f") KMS")
+                                    .foregroundColor(.gray)
+                                Image(systemName: "figure.walk")
+                                    .foregroundColor(priColor)
+                            }
+                            .font(.system(size: 16))
                             
-                            Spacer()
-                            Text("\(destination.distance, specifier: "%.2f") KMS")
-                            Image(systemName: "figure.walk")
-                                .foregroundColor(priColor)
+                            Divider()
+                                .overlay(.gray)
+                            
                         }
-                        .font(.system(size: 16))
-                        
-                        Divider()
-                            .overlay(priColor)
-                        
+                        .padding(.bottom, 5.0)
                     }
-                    .padding(.bottom, 10.0)
                 }
+                .padding()
+                .background(Color(red: 0.9647058823529412, green: 0.9647058823529412, blue: 0.9647058823529412))
+                .cornerRadius(20)
+                    
                 
-                Spacer()
-            }
-            .padding()
+            }.padding(.bottom, 30.0)
             
             ZStack {
-                Image("study_room")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+                VStack {
+                    Image("study_room")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 350, height: 350)
+                        .clipped()
+                        .cornerRadius(20)
+                        .shadow(radius: 20)
+
+                }
+
                 
                 VStack {
                     Spacer()
@@ -88,21 +102,19 @@ struct ContentView: View {
                     }) {
                         Text("BOOK A STUDY SPACE")
                             .font(.headline)
-                            .foregroundColor(.black)
+                            .foregroundColor(priColor)
                             .padding()
-                            .background(priColor)
+                            .background(.white)
                             .cornerRadius(10)
-                    }
+                    }.padding(.bottom, 20.0)
                     
-                    Spacer()
-                    Spacer()
-                    Spacer()
                 }
                 
 
             }
         }
         .navigationTitle("Discover")
+        .padding()
     }
 }
 
